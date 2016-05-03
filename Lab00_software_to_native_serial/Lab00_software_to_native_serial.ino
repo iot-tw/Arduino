@@ -1,6 +1,6 @@
 /*
   Software serial multple serial test
-
+ 通透範例程式，讓LORA 模組通過軟體序列埠能直接轉到arduion 硬體的序列埠
  Receives from the hardware serial, sends to software serial.
  Receives from software serial, sends to hardware serial.
 

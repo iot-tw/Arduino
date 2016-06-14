@@ -3,7 +3,7 @@
 # Lab 0 初始
 Lab00_software_to_native_serial
 
-什麼都沒幹，只把線路只把線路接好 
+什麼都沒幹，只把線路接好 
 
 # Lab 1 用模組送點資料
 Lab01_giot_AT-Count

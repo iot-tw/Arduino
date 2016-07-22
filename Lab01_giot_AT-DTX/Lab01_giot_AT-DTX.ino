@@ -2,29 +2,21 @@
 
 SoftwareSerial LoRaUART(10, 11); // to TX, to RX
 
+unsigned long c = 1;
 void setup() {
   Serial.begin(9600);
-
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
-  Serial.println("Serial Ready");
-
+  Serial.println("Steup, Serial Ready");
   LoRaUART.begin(9600);
-  LoRaUART.println("AT");
-
-  while (!LoRaUART.available()) {
-    ;
-  }
-  Serial.println("LoRa Serial Ready");
 }
 
+void dtx() {
+  char buf[33];
+  memset(buf, 0x0, 33);
+  sprintf(buf, "at+dtx=8,%08d", c++);
+  LoRaUART.println(buf);
+  c = c%10000;
+}
 void loop() {
-
-
-  //LoRaUART.println("AT+DTX=6,\"abcdef\"");
-  LoRaUART.println("AT+DTX=5,\"33/88\"");
-  Serial.println("ATDTX 33/88");
-  //LoRaUART.println("AT+DTX=16,1234567890abcdef");
-  delay(10*1000);
+  delay(60*1000); // 60 sec
+  dtx();
 }

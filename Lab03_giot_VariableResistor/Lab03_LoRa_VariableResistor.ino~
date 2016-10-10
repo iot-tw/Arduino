@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>
 
 SoftwareSerial LoRaUART(10, 11); // to TX, to RX
-const int variable = A0;
+const int variable = A2;
 const int led = 9;
 
 void setup() {

@@ -6,7 +6,7 @@ Lab00_software_to_native_serial
 什麼都沒幹，只把線路接好 
 
 # Lab 1 用模組送點資料
-Lab01_giot_AT-Count
+Lab01_giot_AT-Count 原本AT-DTX 優化版，每次把傳送數字加一
 
 Lab01_giot_AT-DTX
 # Lab 2 溫溼度計 + Arduino

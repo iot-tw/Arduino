@@ -9,7 +9,22 @@
  int block=2;  
  byte blockcontent[16] = {"Hello world"};  
  byte readbackblock[18];  
-
+/**
+ * mfrc522.PICC_IsNewCardPresent() should be checked before 
+ * @return the card UID
+ */
+ unsigned long getID(){
+  if ( ! mfrc522.PICC_ReadCardSerial()) { //Since a PICC placed get Serial and continue
+    return -1;
+  }
+  unsigned long hex_num;
+  hex_num =  mfrc522.uid.uidByte[0] << 24;
+  hex_num += mfrc522.uid.uidByte[1] << 16;
+  hex_num += mfrc522.uid.uidByte[2] <<  8;
+  hex_num += mfrc522.uid.uidByte[3];
+  mfrc522.PICC_HaltA(); // Stop reading
+  return hex_num;
+ }
  void setup() {  
    Serial.begin(9600);  
    SPI.begin();  
@@ -22,20 +37,27 @@
 
  void loop(){  
      mfrc522.PCD_Init();  
-     if ( ! mfrc522.PICC_IsNewCardPresent()) {  
-       return;  
-     }  
+     //if ( ! mfrc522.PICC_IsNewCardPresent()) {  
+     //  return;  
+     //}  
      if ( !mfrc522.PICC_ReadCardSerial()) {  
        return;  
      }  
 //     writeBlock(block, blockcontent);
      Serial.println("card selected");  
-     readBlock(block, readbackblock);  
-     Serial.print("read block: ");  
-     for (int j=0 ; j<16 ; j++){  
-     Serial.write (readbackblock[j]);  
+   if(mfrc522.PICC_IsNewCardPresent()) {
+      unsigned long uid = getID();
+      if(uid != -1){
+        Serial.print("Card detected, UID: "); 
+        Serial.println(uid);
+      }
+     } 
+     //readBlock(block, readbackblock);  
+     //Serial.print("read block: ");  
+     //for (int j=0 ; j<16 ; j++){  
+     //Serial.write (readbackblock[j]);  
    }  
-   Serial.println("");     
+//   Serial.println("");     
  }
 
  int writeBlock(int blockNumber, byte arrayAddress[]){  
@@ -82,3 +104,4 @@
    Serial.println("block was read");  
    delay(500);  
  }  
+ 

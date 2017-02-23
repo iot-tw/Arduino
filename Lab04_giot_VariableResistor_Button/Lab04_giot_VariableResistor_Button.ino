@@ -1,3 +1,4 @@
+//讀取A0 電壓，讀取 Pin 4 High/Low ,LoRa 發送出去
 #include <SoftwareSerial.h>
 
 SoftwareSerial LoRaUART(10, 11); // to TX, to RX
@@ -28,9 +29,9 @@ void loop() {
   String sensorData;
   sensorData = String(sensorValue,4);
   Serial.println(sensorData);
-  
+
   btVoltage = digitalRead(button);
-    
+
   if (btVoltage == HIGH){
     digitalWrite(LED_BUILTIN, HIGH);
     //Serial.println("Push down");

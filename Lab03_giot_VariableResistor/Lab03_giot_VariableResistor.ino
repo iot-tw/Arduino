@@ -1,3 +1,4 @@
+//讀取 A0 的電壓資料，利用LoRa 發送出去。
 #include <SoftwareSerial.h>
 
 SoftwareSerial LoRaUART(10, 11); // to TX, to RX
@@ -30,6 +31,6 @@ void loop() {
   //LoRaUART.println("AT+DTX=10,1234567890");
   //Serial.println("ATDTX 1234567890");
   //LoRaUART.println("AT+DTX=16,1234567890abcdef");
-  
+
   delay(3*1000);
 }

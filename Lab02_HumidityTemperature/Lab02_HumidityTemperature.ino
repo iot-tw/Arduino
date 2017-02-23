@@ -1,4 +1,6 @@
-
+/*
+讀取DHT11 溫濕度計，通過LoRa 模組發送出去。 
+*/
 #include <SoftwareSerial.h>
 #include "DHT.h"
 

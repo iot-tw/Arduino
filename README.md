@@ -3,7 +3,7 @@
 # Lab 0 初始
 Lab00_software_to_native_serial
 
-什麼都沒幹，只把線路接好 
+什麼都沒幹，只把線路接好
 
 # Lab 1 用模組送點資料
 Lab01_giot_AT-Count 原本AT-DTX 優化版，每次把傳送數字加一
@@ -18,3 +18,8 @@ Lab03_giot_VariableResistor
 # Lab 4 除了可變電阻還有個按鈕
 
 Lab04_giot_VariableResistor_Button
+# Lab 5 利用旋轉編碼器 提報 LoRa 資料
+
+Lab05_rotary
+# Lab 6 讀取rfid uuid 及 讀取時間模組RTC 合併上傳LoRa
+Lab06_rfid_rc522_read_uuid_2_lora

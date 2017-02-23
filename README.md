@@ -21,5 +21,5 @@ Lab04_giot_VariableResistor_Button
 # Lab 5 利用旋轉編碼器 提報 LoRa 資料
 
 Lab05_rotary
-# Lab 6 讀取rfid uuid 及 讀取時間模組RTC 合併上傳LoRa
+# Lab 6 讀取rfid uuid 及 讀取時間模組DS1302 合併上傳LoRa
 Lab06_rfid_rc522_read_uuid_2_lora

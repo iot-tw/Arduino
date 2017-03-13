@@ -3,12 +3,11 @@
 
 SoftwareSerial LoRaUART(10, 11); // to TX, to RX
 const int variable = A0;
-const int led = 9;
 
 void setup() {
   Serial.begin(9600);
   while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
+    ; 
   }
   Serial.println("Serial Ready");
 
@@ -27,10 +26,6 @@ void loop() {
   sensorData = String(sensorValue);
   Serial.println(sensorData);
   LoRaUART.println("AT+DTX=" + String(sensorData.length()) + ",\"" + sensorData + "\"");
-  //LoRaUART.println("AT+DTX=6,\"abcdef\"");
-  //LoRaUART.println("AT+DTX=10,1234567890");
-  //Serial.println("ATDTX 1234567890");
-  //LoRaUART.println("AT+DTX=16,1234567890abcdef");
 
   delay(3*1000);
 }

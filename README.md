@@ -1,4 +1,4 @@
-# arudino
+# Arudino
 # 使用Arduino UNO 連接 GIoT GL-6509 LoRaWan 模組
 # Lab 0 初始
 Lab00_software_to_native_serial

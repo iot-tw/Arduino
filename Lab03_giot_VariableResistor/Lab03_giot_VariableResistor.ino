@@ -24,7 +24,7 @@ void setup() {
 void loop() {
   int sensorValue = analogRead(variable);
   String sensorData;
-  sensorData = String(sensorValue,4);
+  sensorData = String(sensorValue);
   Serial.println(sensorData);
   LoRaUART.println("AT+DTX=" + String(sensorData.length()) + ",\"" + sensorData + "\"");
   //LoRaUART.println("AT+DTX=6,\"abcdef\"");

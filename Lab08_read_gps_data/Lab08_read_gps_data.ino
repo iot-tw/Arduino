@@ -12,7 +12,7 @@
 #include <SoftwareSerial.h>
 #include <TinyGPS.h>
 TinyGPS gps;
-SoftwareSerial mySerial(10, 11); // RX, TX
+SoftwareSerial mySerial(3, 4); // RX, TX
 String readString, servo1, servo2;
 void getgps(TinyGPS &gps);
 void setup() {
@@ -40,7 +40,7 @@ void loop() { // run over and over
     }
   }
   if (readString.length() >0) {
-        //Serial.println(readString); //see what was received
+        Serial.println(readString); //see what was received
         servo1 = readString.substring(0, 6); //get the first four characters
         servo2 = readString.substring(8, 9); //get the next four characters 
         if (servo1 == "$GPRMC") {
@@ -61,6 +61,8 @@ void getgps(TinyGPS &gps)
   
   // Define the variables that will be used
   float latitude, longitude;
+  //unsigned long latitude_dec, longitude_dec;
+  //String latitude_hex, longitude_hex;
   // Then call this function
   gps.f_get_position(&latitude, &longitude);
   // You can now print variables latitude and longitude
@@ -68,7 +70,11 @@ void getgps(TinyGPS &gps)
   Serial.print(latitude,5); 
   Serial.print(", "); 
   Serial.println(longitude,5);
-  
+  unsigned long latitude_dec = latitude/180*pow(2,32);
+  unsigned long longitude_dec = longitude/180*pow(2,32);
+  String latitude_hex = String(latitude_dec,HEX);
+  String longitude_hex = String(longitude_dec,HEX);
+  Serial.println("Lat/Long: " + latitude_hex + "," + longitude_hex);
   // Same goes for date and time
   int year;
   byte month, day, hour, minute, second, hundredths;

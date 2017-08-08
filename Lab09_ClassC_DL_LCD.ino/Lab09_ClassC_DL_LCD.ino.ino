@@ -1,39 +1,18 @@
-//#include <Adafruit_MCP23017.h>
-//#include <Adafruit_RGBLCDShield.h>
 //#include <SoftwareSerial.h>
 #include <Wire.h>
-
-/*
-  LiquidCrystal Library - Hello World
-
-  Demonstrates the use a 16x2 LCD display.  The LiquidCrystal
-  library works with all LCD displays that are compatible with the
-  Hitachi HD44780 driver. There are many of them out there, and you
-  can usually tell them by the 16-pin interface.
-
-  This sketch prints "Hello World!" to the LCD
-  and shows the time.
-*/
-
-
 // include the library code:
 //#include <LiquidCrystal.h>
 #include <LiquidCrystal_I2C.h>
 // initialize the library with the numbers of the interface pins
 //LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // 設定 LCD I2C 位址
-// LoRaSerial Port
+// LoRaSerial Port Arduino Mega 2560 //Tx1,Rx1
 HardwareSerial& LoRaUART = Serial1;
+// LoRaSerial Port Arduino UNO 
 //SoftwareSerial LoRaUART(10, 11); // to Tx, To Rx
-
-int sensorValue ;
-
-
 
 void setup()
 {
-  int tmpInt;
-  int insize;
   String myString;
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
@@ -45,16 +24,14 @@ void setup()
   }
   Serial.println("Serial Ready");
   LoRaUART.begin(9600);
-  while (!LoRaUART) {
-    ; // wait for serial1 port to connect.
-  }
+     while (!LoRaUART) {
+       ; // wait for serial1 port to connect.
+     }
   LoRaUART.println("at+echo=0");
      while (!LoRaUART.available()) {
       ;
      }
-  //   Serial.println("LoRa Serial Ready");
-  //delay(2 * 1000);
-  if ((insize = (LoRaUART.available())) > 0)
+  if (((LoRaUART.available())) > 0)
   { //判斷有沒有訊息接收 
     myString = LoRaUART.readString();
     myString.trim();
@@ -86,7 +63,7 @@ void setup()
 
 void loop()
 {
-  int insize,Len;
+  int Len;
   String myString;
   String DownLink;
   String PayLoad;
@@ -115,8 +92,4 @@ void loop()
     lcd.setCursor(0, 1);
     lcd.print(PayLoad);    
   }
-  
-  //lcd.setCursor(0, 1);
-  //lcd.print(DownLink);
-
 }

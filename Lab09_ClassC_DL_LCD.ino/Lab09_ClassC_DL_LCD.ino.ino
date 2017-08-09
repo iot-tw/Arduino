@@ -1,15 +1,16 @@
-//#include <SoftwareSerial.h>
-#include <Wire.h>
 // include the library code:
-//#include <LiquidCrystal.h>
+// 給 I2C 16x2 LCD 用的程式庫
+#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 // initialize the library with the numbers of the interface pins
-//LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
-LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // 設定 LCD I2C 位址
+LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // 設定 LCD I2C 位址 通常是 0x27 ,也有 0x3F.
 // LoRaSerial Port Arduino Mega 2560 //Tx1,Rx1
 HardwareSerial& LoRaUART = Serial1;
-// LoRaSerial Port Arduino UNO 
+// LoRaSerial Port Arduino UNO,這樣接SoftwareSerial Rx 會有亂碼問題，導致Downlink 接收錯誤。
+//#include <SoftwareSerial.h>
 //SoftwareSerial LoRaUART(10, 11); // to Tx, To Rx
+// 真要接，得把用在Debug 的Serial Monitor 的Serial Tx0 Rx0 拿來用，然後關掉debug messages,
+// HardwareSerial& LoRaUART = Serial;
 
 void setup()
 {

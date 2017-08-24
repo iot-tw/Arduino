@@ -1,16 +1,20 @@
-// include the library code:
-// 給 I2C 16x2 LCD 用的程式庫
+//Class C Down Link LoRaWan HEX data to LCD 16x2  
+//GL6509 use Mega Serail2/Rx2
+//i2c LCD use D20 D21 PIN
+//include the library code:
+// 給 LCM1602_IIC_V1 + 16x2 LCD 用的程式庫
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 // initialize the library with the numbers of the interface pins
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // 設定 LCD I2C 位址 通常是 0x27 ,也有 0x3F.
-// LoRaSerial Port Arduino Mega 2560 //Tx1,Rx1
-HardwareSerial& LoRaUART = Serial1;
+// LoRaSerial Port Arduino Mega 2560 //Tx2,Rx2
+HardwareSerial& LoRaUART = Serial2;
 // LoRaSerial Port Arduino UNO,這樣接SoftwareSerial Rx 會有亂碼問題，導致Downlink 接收錯誤。
 //#include <SoftwareSerial.h>
 //SoftwareSerial LoRaUART(10, 11); // to Tx, To Rx
 // 真要接，得把用在Debug 的Serial Monitor 的Serial Tx0 Rx0 拿來用，然後關掉debug messages,
-// HardwareSerial& LoRaUART = Serial;
+// Sketch 代碼時 得把LoRa 接UNO 上的 Rx D0 Pin 拿下，不然upload 會失敗。
+//HardwareSerial& LoRaUART = Serial;
 
 void setup()
 {
@@ -20,40 +24,46 @@ void setup()
   // Print a message to the LCD.
   lcd.print("hello, world!");
   Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
+    while (!Serial) {
+      ; // wait for serial port to connect. Needed for native USB port only
+    }
   Serial.println("Serial Ready");
   LoRaUART.begin(9600);
-     while (!LoRaUART) {
-       ; // wait for serial1 port to connect.
-     }
+    while (!LoRaUART) {
+      ; // wait for serial1 port to connect.
+    }
+  
   LoRaUART.println("at+echo=0");
-     while (!LoRaUART.available()) {
-      ;
-     }
-  if (((LoRaUART.available())) > 0)
-  { //判斷有沒有訊息接收 
-    myString = LoRaUART.readString();
-    myString.trim();
-    Serial.println("echo=0[" + myString +"]");
-  }
+  while (!LoRaUART.available()) {;}
+  myString = LoRaUART.readString();
+  myString.replace("\n","");
+  Serial.println("echo=0[" + myString +"]");
+  
   LoRaUART.println("at+sgmd?");
   while (!LoRaUART.available()) {;}
   myString = LoRaUART.readString();
-  myString.trim(); 
+  myString.replace("\n","");
   Serial.println("sgmd[" + myString + "]");
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print(myString);
+
+  LoRaUART.println("at+sgmr?");
+  while (!LoRaUART.available()) {;}
+  myString = LoRaUART.readString();
+  myString.replace("\n","");
+  Serial.println("sgmr[" + myString + "]");
   
   LoRaUART.println("at+dttx");
   while (!LoRaUART.available()) {;} 
   myString = LoRaUART.readString();
-  myString.trim(); 
+  myString.replace("\n","");
   Serial.println("dttx[" + myString +"]");
   
   LoRaUART.println("at+drx?");
   while (!LoRaUART.available()) {;} 
   myString = LoRaUART.readString();
-  myString.trim(); 
+  myString.replace("\n","");
   Serial.println("drx[" + myString +"]");
   
   if (myString.indexOf("Radio Tx Done")) {

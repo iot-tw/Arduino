@@ -12,7 +12,11 @@
 #include <SoftwareSerial.h>
 #include <TinyGPS.h>
 TinyGPS gps;
-SoftwareSerial mySerial(3, 4); // RX, TX
+// GPS mySerial Port Arduino Mega 2560 //Tx1 Rx1
+HardwareSerial& mySerial = Serial1;
+HardwareSerial& LoRaUART = Serial2;
+// mySerial Port Arduino UNO,這樣接SoftwareSerial Rx 
+//SoftwareSerial mySerial(3, 4); // RX, TX
 String readString, servo1, servo2;
 void getgps(TinyGPS &gps);
 void setup() {
@@ -23,8 +27,18 @@ void setup() {
   }
   Serial.println("Hardware Serial Ready");
 
-  // set the data rate for the SoftwareSerial port
+  // set the data rate for the GPS port
   mySerial.begin(9600);
+  while (!Serial1) {
+    ;
+  }
+  Serial.println("GPS Serial Ready");
+  
+  LoRaUART.begin(9600);
+  while (!LoRaUART) {
+    ;
+  }
+  Serial.println("LoRa Module Serial Ready");
 }
 
 void loop() { // run over and over
@@ -40,7 +54,7 @@ void loop() { // run over and over
     }
   }
   if (readString.length() >0) {
-        Serial.println(readString); //see what was received
+        //Serial.println(readString); //see what was received
         servo1 = readString.substring(0, 6); //get the first four characters
         servo2 = readString.substring(8, 9); //get the next four characters 
         if (servo1 == "$GPRMC") {
@@ -66,7 +80,7 @@ void getgps(TinyGPS &gps)
   // Then call this function
   gps.f_get_position(&latitude, &longitude);
   // You can now print variables latitude and longitude
-  Serial.print("Lat/Long: "); 
+  Serial.print("Lat/Lng: "); 
   Serial.print(latitude,5); 
   Serial.print(", "); 
   Serial.println(longitude,5);
@@ -75,31 +89,7 @@ void getgps(TinyGPS &gps)
   String latitude_hex = String(latitude_dec,HEX);
   String longitude_hex = String(longitude_dec,HEX);
   Serial.println("Lat/Long: " + latitude_hex + "," + longitude_hex);
-  // Same goes for date and time
-  int year;
-  byte month, day, hour, minute, second, hundredths;
-  gps.crack_datetime(&year,&month,&day,&hour,&minute,&second,&hundredths);
-  // Print data and time
-  Serial.print("Date: "); Serial.print(month, DEC); Serial.print("/"); 
-  Serial.print(day, DEC); Serial.print("/"); Serial.print(year);
-  Serial.print("  Time: "); Serial.print(hour, DEC); Serial.print(":"); 
-  Serial.print(minute, DEC); Serial.print(":"); Serial.print(second, DEC); 
-  Serial.print("."); Serial.println(hundredths, DEC);
-  //Since month, day, hour, minute, second, and hundr
+  Serial.println("Debug AT: at+dtx=22,901aff"+latitude_hex+longitude_hex);
+  LoRaUART.println("at+dtx=22,901aff"+latitude_hex+longitude_hex);
   
-  // Here you can print the altitude and course values directly since 
-  // there is only one value for the function
-  Serial.print("Altitude (meters): "); Serial.println(gps.f_altitude());  
-  // Same goes for course
-  Serial.print("Course (degrees): "); Serial.println(gps.f_course()); 
-  // And same goes for speed
-  Serial.print("Speed(kmph): "); Serial.println(gps.f_speed_kmph());
-  Serial.println();
-  
-  // Here you can print statistics on the sentences.
-  unsigned long chars;
-  unsigned short sentences, failed_checksum;
-  gps.stats(&chars, &sentences, &failed_checksum);
-  //Serial.print("Failed Checksums: ");Serial.print(failed_checksum);
-  //Serial.println(); Serial.println();
 }

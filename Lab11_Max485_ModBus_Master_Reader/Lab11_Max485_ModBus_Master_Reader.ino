@@ -112,7 +112,7 @@ void loop()
     //Serial.println(node.getResponseBuffer(0x02));
     //Serial.println(node.getResponseBuffer(0x03));
     LoRaUART.println("at+dtx=6,0" +LoRa_Voltage+LoRa_Celsius);
-    Serial.println("Debug AT: at+dtx=3,0"+LoRa_Voltage+LoRa_Celsius);
+    Serial.println("Debug AT: at+dtx=6,0"+LoRa_Voltage+LoRa_Celsius);
   
   //LoRaUART.println("at+dttx");
   while (!LoRaUART.available()) {;} 

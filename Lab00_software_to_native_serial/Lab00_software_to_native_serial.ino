@@ -9,9 +9,10 @@
  * TX is digital pin 11 (connect to RX of other device)
 
  */
-#include <SoftwareSerial.h>
-
-SoftwareSerial mySerial(10, 11); // RX, TX
+// LoRaSerial Port Arduino Mega 2560 //Tx2,Rx2
+HardwareSerial& mySerial = Serial2;
+//#include <SoftwareSerial.h>
+//SoftwareSerial mySerial(10, 11); // RX, TX
 
 void setup() {
   // Open serial communications and wait for port to open:

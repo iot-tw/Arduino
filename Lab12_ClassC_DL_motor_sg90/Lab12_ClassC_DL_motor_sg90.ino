@@ -32,6 +32,7 @@ void setup()
   
   LoRaUART.println("atz");
   LoRaUART.println("at+echo=0");
+  LoRaUART.println("at+dttx");
   while (!LoRaUART.available()) {;}
   String myString = LoRaUART.readString();
   myString.replace("\n","");

@@ -23,6 +23,7 @@ void setup()
   lcd.begin(16, 2);
   // Print a message to the LCD.
   lcd.print("hello, world!");
+  Serial.println("LCD hello world");
   Serial.begin(9600);
     while (!Serial) {
       ; // wait for serial port to connect. Needed for native USB port only

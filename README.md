@@ -4,7 +4,7 @@
 Lab00_software_to_native_serial
 
 什麼都沒幹，只把線路接好 可以充當console，用AT Command 配置模組
-
+!(https://makerpro.cc/wp-content/uploads/2017/06/%E5%9C%96%E7%89%879.png)
 # Lab 1 用模組送點資料
 
 Lab01_giot_AT-Count ，每次把傳送數字加一

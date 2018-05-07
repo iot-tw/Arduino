@@ -25,12 +25,12 @@ Lab05_rotary
 Lab06_rfid_rc522_read_uuid_2_lora
 # Lab 7 寫入資料到RFID Tag 
 
-Lab07_rfid-rc522_writer	Lab06 RFID send to LoRa Gateway	a year ago
+Lab07_rfid-rc522_writer	Lab06 RFID send to LoRa Gateway	
 # Lab 8 讀取GPS 資料送LoRa Gateway
 
-Lab08_GPS_HEX_DEC	convert LAT/Long to DEC to HEX Strings Example.	9 months ago
-Lab08_gps_reader	Neo-6M GPS read location and time print to console port	9 months ago
-Lab08_read_gps_data	Mega Serail1 for GPS , Serail2 for LoRa	9 months ago
+Lab08_GPS_HEX_DEC	convert LAT/Long to DEC to HEX Strings Example.
+Lab08_gps_reader	Neo-6M GPS read location and time print to console port	
+Lab08_read_gps_data	Mega Serail1 for GPS , Serail2 for LoRa	
 # Lab 9 LoRa Downlink Class C 到 LCD 面板顯示
 
 Lab09_ClassC_DL_LCD	
